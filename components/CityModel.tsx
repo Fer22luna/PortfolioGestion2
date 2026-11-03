@@ -8,7 +8,7 @@ export const MODEL_URL = "/models/ciudadConAutos.glb";
 export const DRACO_PATH = "/draco/";
 
 /** Tamaño (en unidades de escena) del lado mayor de la maqueta, así las cámaras de STEPS no dependen de la escala del GLB */
-export const MODEL_SIZE = 20;
+export const MODEL_SIZE = 24;
 
 export default function CityModel({ modelSize = MODEL_SIZE }: { modelSize?: number }) {
   const { scene } = useGLTF(MODEL_URL, DRACO_PATH);
