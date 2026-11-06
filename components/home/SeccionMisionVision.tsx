@@ -9,7 +9,7 @@ export default function SeccionMisionVision() {
     <section
       id="mision"
       aria-labelledby="mision-titulo"
-      className="relative scroll-mt-24 overflow-x-clip px-4 py-20 sm:py-28"
+      className="seccion-diferida relative scroll-mt-24 overflow-x-clip px-4 py-20 sm:py-28"
     >
       <FondoParallax />
       <div className="relative mx-auto max-w-6xl">

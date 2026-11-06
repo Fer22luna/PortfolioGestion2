@@ -14,7 +14,7 @@ export default function PasosTrabajo() {
     <section
       id="como-trabajamos"
       aria-labelledby="como-trabajamos-titulo"
-      className="scroll-mt-24 px-4 pt-6"
+      className="seccion-diferida scroll-mt-24 px-4 pt-6"
     >
       <div className="panel mx-auto max-w-6xl p-6 sm:p-8">
         <Reveal>

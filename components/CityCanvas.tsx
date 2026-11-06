@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
   ContactShadows,
@@ -17,9 +17,19 @@ import DebugHud, { DebugProbe, type Readout } from "./DebugHud";
 type Props = {
   step: Step;
   stepIndex: number;
+  /** false cuando el hero sale de pantalla: se frena el bucle de render */
+  active?: boolean;
 };
 
-export default function CityCanvas({ step, stepIndex }: Props) {
+export default function CityCanvas({ step, stepIndex, active = true }: Props) {
+  const [tabVisible, setTabVisible] = useState(true);
+  useEffect(() => {
+    const sync = () => setTabVisible(!document.hidden);
+    sync();
+    document.addEventListener("visibilitychange", sync);
+    return () => document.removeEventListener("visibilitychange", sync);
+  }, []);
+
   // Este componente solo se renderiza en el cliente (dynamic, ssr:false)
   const [debug] = useState(
     () => new URLSearchParams(window.location.search).get("debug") === "1",
@@ -32,10 +42,14 @@ export default function CityCanvas({ step, stepIndex }: Props) {
   const readoutRef = useRef<Readout>(step.camera);
 
   return (
-    <div className="absolute inset-0">
+    <div
+      className="absolute inset-0"
+      style={{ visibility: active ? "visible" : "hidden" }}
+    >
       <Canvas
+        frameloop={active && tabVisible ? "always" : "never"}
         shadows="percentage"
-        dpr={[1, window.innerWidth < 1024 ? 1.5 : 1.75]}
+        dpr={[1, 1.5]}
         camera={{ fov: step.camera.fov, near: 0.1, far: 300 }}
         gl={{
           alpha: true,

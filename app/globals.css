@@ -177,6 +177,8 @@ p,
   .glass-card {
     --glass-radius: 28px;
     background: rgba(14, 46, 69, 0.86);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
     max-height: 52svh;
     overflow-y: auto;
   }
@@ -281,15 +283,54 @@ p,
 }
 
 /* Valores: banda azul editorial */
+.valores-lista {
+  --row-h: 4.5rem;
+}
+
+.valores-contenido {
+  contain: layout paint style;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
+.valores-patron {
+  background: url("/meridianos.svg") center / cover no-repeat;
+}
+
+.valores-contain {
+  contain: layout paint style;
+}
+
 .valores-marcador {
-  transform: translateY(calc(var(--i, 0) * 4.5rem));
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(calc(var(--i, 0) * var(--row-h)));
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Los 8 paneles quedan montados y apilados; solo cambia cuál es el activo */
+.valores-stack {
+  display: grid;
+  min-height: 22rem;
+}
+
+.valor-panel {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0.25s;
+}
+
+.valor-panel[data-active="true"] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
 }
 
 @keyframes valores-entrada {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -297,33 +338,42 @@ p,
   }
 }
 
-.valores-detalle {
-  animation: valores-entrada 0.3s ease-out;
-}
-
-.valores-colapso {
-  display: grid;
-  grid-template-rows: 0fr;
-  opacity: 0;
-  transition: grid-template-rows 0.3s ease, opacity 0.3s ease;
-}
-
-.valores-colapso-abierto {
-  grid-template-rows: 1fr;
-  opacity: 1;
+.valores-acc-contenido {
+  animation: valores-entrada 0.25s ease-out;
 }
 
 .valores-chevron {
-  transition: transform 0.3s ease;
+  transition: transform 0.25s ease;
+}
+
+/* Secciones debajo del hero: no se pintan hasta que se acercan */
+.seccion-diferida {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
+@keyframes flotar {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.flotar {
+  animation: flotar 7s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .valores-marcador,
-  .valores-colapso,
+  .valor-panel,
   .valores-chevron {
     transition: none;
   }
-  .valores-detalle {
+  .valores-acc-contenido,
+  .flotar {
     animation: none;
   }
 }

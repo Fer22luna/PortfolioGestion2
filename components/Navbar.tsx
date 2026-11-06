@@ -55,29 +55,27 @@ export default function Navbar() {
     };
   }, [abierto]);
 
-  // Sección actual: la última cuyo borde superior ya pasó el 35% de la pantalla
+  // Sección actual: la última (en orden de página) que cruza la franja central
   useEffect(() => {
     if (pathname !== "/") return;
     const ids = NAVBAR_LINKS.map((l) => l.id);
-    const calcular = () => {
-      const linea = window.innerHeight * 0.35;
-      let id: string | null = null;
-      for (const s of ids) {
-        const el = document.getElementById(s);
-        if (el && el.getBoundingClientRect().top <= linea) id = s;
-      }
-      const fin =
-        window.innerHeight + window.scrollY >=
-        document.documentElement.scrollHeight - 4;
-      setActual(fin ? "contacto" : id);
-    };
-    calcular();
-    window.addEventListener("scroll", calcular, { passive: true });
-    window.addEventListener("resize", calcular);
-    return () => {
-      window.removeEventListener("scroll", calcular);
-      window.removeEventListener("resize", calcular);
-    };
+    const dentro = new Set<string>();
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) dentro.add(e.target.id);
+          else dentro.delete(e.target.id);
+        }
+        const id = [...ids].reverse().find((s) => dentro.has(s));
+        if (id) setActual(id);
+      },
+      { rootMargin: "-35% 0px -35% 0px" },
+    );
+    for (const s of ids) {
+      const el = document.getElementById(s);
+      if (el) io.observe(el);
+    }
+    return () => io.disconnect();
   }, [pathname]);
 
   const actualEnPagina = pathname === "/" ? actual : null;

@@ -21,7 +21,7 @@ export default function TarjetaSolucion({
           compact
           imagen={solucion.imagen}
           acento={solucion.acento}
-          sizes="(min-width: 1024px) 760px, 640px"
+          sizes="(min-width: 1024px) 50vw, 100vw"
         />
         <p className="card-eyebrow text-brand-terracota">
           Línea {String(index + 1).padStart(2, "0")}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import { STEPS } from "@/lib/steps";
@@ -13,6 +13,16 @@ const LAST = STEPS.length - 1;
 export default function ScrollScene() {
   const containerRef = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
+  const [enPantalla, setEnPantalla] = useState(true);
+
+  // Frena el render 3D cuando el hero no se ve
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setEnPantalla(e.isIntersecting));
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -39,7 +49,7 @@ export default function ScrollScene() {
       style={{ height: `${STEPS.length * 100}svh` }}
     >
       <div className="sticky top-0 h-svh w-full overflow-hidden">
-        <CityCanvas step={STEPS[active]} stepIndex={active} />
+        <CityCanvas step={STEPS[active]} stepIndex={active} active={enPantalla} />
 
         <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-4 p-4 lg:inset-x-auto lg:bottom-auto lg:right-[4vw] lg:top-1/2 lg:-translate-y-1/2 lg:flex-row lg:gap-6 lg:p-0">
           <div
