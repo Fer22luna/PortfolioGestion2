@@ -13,9 +13,9 @@ export default function Home() {
       <main>
         <ScrollScene />
 
+        <SeccionSoluciones />
         <SeccionMisionVision />
         <SeccionValores />
-        <SeccionSoluciones />
         <PasosTrabajo />
       </main>
       <Footer />

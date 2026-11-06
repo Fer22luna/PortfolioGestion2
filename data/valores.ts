@@ -14,6 +14,8 @@ export type Valor = {
   descripcion: string;
   icono: IconoValor;
   tono: "azul" | "terracota";
+  /** Texto ampliado "Cómo lo aplicamos". Si no está, el panel muestra solo la descripción. */
+  ampliado?: string;
 };
 
 export const VALORES_TITULO = "Nuestros valores";

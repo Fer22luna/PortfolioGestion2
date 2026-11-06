@@ -36,8 +36,8 @@
   --nav-shadow: 0 10px 30px rgba(20, 50, 60, 0.14);
 
   /* Acento / CTA */
-  --accent-from: #5bc72a;
-  --accent-to: #3fa51a;
+  --accent-from: #2c8311;
+  --accent-to: #247010;
   --accent-text: #ffffff;
   --accent-ring: #19a7e8;
 
@@ -55,6 +55,39 @@
 html {
   scroll-snap-type: y proximity;
   scroll-behavior: smooth;
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+  overflow-x: clip;
+}
+
+body {
+  overflow-x: clip;
+}
+
+@keyframes menu-abrir {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.menu-panel {
+  transform-origin: top center;
+  animation: menu-abrir 0.18s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-panel {
+    animation: none;
+  }
+  .btn,
+  .btn:hover {
+    transition: none;
+    transform: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -137,6 +170,23 @@ p,
   font-size: clamp(1.5rem, 7vw, var(--title-size));
   line-height: 1.05;
   font-weight: 700;
+}
+
+/* Móvil y tablet: la tarjeta va abajo, con fondo azul de marca para contraste AA */
+@media (max-width: 1023.98px) {
+  .glass-card {
+    --glass-radius: 28px;
+    background: rgba(14, 46, 69, 0.86);
+    max-height: 52svh;
+    overflow-y: auto;
+  }
+  .card-title {
+    font-size: clamp(1.375rem, 5.2vw, 2rem);
+  }
+  .card-body {
+    font-size: clamp(0.9375rem, 3.6vw, 1.0625rem);
+    opacity: 1;
+  }
 }
 
 .card-body {
@@ -228,6 +278,54 @@ p,
   padding: 0.1rem 0.6rem;
   font-size: 0.8rem;
   font-weight: 700;
+}
+
+/* Valores: banda azul editorial */
+.valores-marcador {
+  transform: translateY(calc(var(--i, 0) * 4.5rem));
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes valores-entrada {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.valores-detalle {
+  animation: valores-entrada 0.3s ease-out;
+}
+
+.valores-colapso {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.3s ease, opacity 0.3s ease;
+}
+
+.valores-colapso-abierto {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.valores-chevron {
+  transition: transform 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .valores-marcador,
+  .valores-colapso,
+  .valores-chevron {
+    transition: none;
+  }
+  .valores-detalle {
+    animation: none;
+  }
 }
 
 /* Valores / Misión y visión */

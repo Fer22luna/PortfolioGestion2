@@ -28,7 +28,7 @@ export default function ScrollScene() {
     const el = containerRef.current;
     if (!el) return;
     const top = el.getBoundingClientRect().top + window.scrollY;
-    window.scrollTo({ top: top + index * window.innerHeight });
+    window.scrollTo({ top: top + index * (el.offsetHeight / STEPS.length) });
   };
 
   return (
@@ -36,9 +36,9 @@ export default function ScrollScene() {
       ref={containerRef}
       id="inicio"
       className="relative"
-      style={{ height: `${STEPS.length * 100}vh` }}
+      style={{ height: `${STEPS.length * 100}svh` }}
     >
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
+      <div className="sticky top-0 h-svh w-full overflow-hidden">
         <CityCanvas step={STEPS[active]} stepIndex={active} />
 
         <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-4 p-4 lg:inset-x-auto lg:bottom-auto lg:right-[4vw] lg:top-1/2 lg:-translate-y-1/2 lg:flex-row lg:gap-6 lg:p-0">
@@ -73,7 +73,7 @@ export default function ScrollScene() {
         {STEPS.map((s) => (
           <div
             key={s.id}
-            className="h-screen"
+            className="h-svh"
             style={{ scrollSnapAlign: "start" }}
           />
         ))}

@@ -6,17 +6,6 @@ export const FOOTER = {
   derechos: "MERIDIANO. Todos los derechos reservados.",
 };
 
-export type EnlaceNav = { label: string; href: string };
-
-// Solo ids de sección que existen en la landing. "contacto" es el propio footer.
-export const FOOTER_NAV: EnlaceNav[] = [
-  { label: "Inicio", href: "#inicio" },
-  { label: "Misión y visión", href: "#mision" },
-  { label: "Valores", href: "#valores" },
-  { label: "Soluciones", href: "#soluciones" },
-  { label: "Contacto", href: "#contacto" },
-];
-
 export type RedSocial = {
   id: "linkedin" | "instagram" | "x";
   label: string;

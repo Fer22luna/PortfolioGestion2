@@ -9,7 +9,7 @@ type Props = {
 
 export default function GlassCard({ step }: Props) {
   return (
-    <div className="glass-card w-full p-8 sm:p-10 lg:w-[560px] lg:p-12">
+    <div className="glass-card w-full p-5 sm:p-8 lg:w-[560px] lg:p-12">
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={step.id}
@@ -17,7 +17,7 @@ export default function GlassCard({ step }: Props) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -24 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="flex flex-col gap-5"
+          className="flex flex-col gap-3 sm:gap-5"
         >
           <p className="card-eyebrow">{step.eyebrow}</p>
           <h1 className="card-title titulo-sin-cortes">{step.title}</h1>

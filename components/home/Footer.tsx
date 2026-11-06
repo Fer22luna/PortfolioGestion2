@@ -2,7 +2,8 @@
 
 import { ArrowUp, MapPin } from "lucide-react";
 import Reveal from "@/components/soluciones/Reveal";
-import { FOOTER, FOOTER_NAV, SOCIAL } from "@/data/footer";
+import { FOOTER, SOCIAL } from "@/data/footer";
+import { FOOTER_LINKS } from "@/data/nav";
 import SiluetaCiudad from "./SiluetaCiudad";
 
 export default function Footer() {
@@ -45,11 +46,11 @@ export default function Footer() {
 
           <nav aria-label="Pie de página" className="mt-8">
             <ul className="flex flex-wrap justify-center gap-x-6 gap-y-3">
-              {FOOTER_NAV.map((l) => (
+              {FOOTER_LINKS.map((l) => (
                 <li key={l.href}>
                   <a
                     href={l.href}
-                    className="rounded font-semibold text-[#e6f0f5] decoration-[#c1633b] decoration-2 underline-offset-8 hover:underline"
+                                  className="inline-flex min-h-11 items-center rounded font-semibold text-[#e6f0f5] decoration-[#c1633b] decoration-2 underline-offset-8 hover:underline"
                   >
                     {l.label}
                   </a>

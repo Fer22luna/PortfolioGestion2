@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
 
@@ -15,10 +15,15 @@ export const metadata: Metadata = {
     "Transformación digital para gobiernos y ciudades más inteligentes.",
 };
 
+export const viewport: Viewport = {
+  themeColor: "#0E2E45",
+  viewportFit: "cover",
+};
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="es" className={`${nunito.variable} antialiased`}>
-      <body className="min-h-screen">{children}</body>
+      <body className="min-h-dvh">{children}</body>
     </html>
   );
 }

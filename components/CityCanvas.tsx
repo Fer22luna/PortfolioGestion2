@@ -35,7 +35,7 @@ export default function CityCanvas({ step, stepIndex }: Props) {
     <div className="absolute inset-0">
       <Canvas
         shadows="percentage"
-        dpr={[1, 1.75]}
+        dpr={[1, window.innerWidth < 1024 ? 1.5 : 1.75]}
         camera={{ fov: step.camera.fov, near: 0.1, far: 300 }}
         gl={{
           alpha: true,

@@ -37,9 +37,9 @@ const toPose = (k: CameraKeyframe): Pose => ({
 const _sph = new Spherical();
 const _target = new Vector3();
 
-function applyPose(camera: PerspectiveCamera, p: Pose) {
+function applyPose(camera: PerspectiveCamera, p: Pose, distanceMul = 1) {
   _target.set(p.tx, p.ty, p.tz);
-  _sph.set(p.distance, p.polar, p.azimuth);
+  _sph.set(p.distance * distanceMul, p.polar, p.azimuth);
   camera.position.setFromSpherical(_sph).add(_target);
   camera.lookAt(_target);
   if (camera.fov !== p.fov) {
@@ -90,7 +90,7 @@ export default function CameraRig({ keyframe, debug = false }: Props) {
     controls.update();
   }, [debug, controls, keyframe, camera]);
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     if (debug) return;
     const c = current.current;
     const k = keyframe;
@@ -104,7 +104,10 @@ export default function CameraRig({ keyframe, debug = false }: Props) {
     easing.damp(c, "tz", k.target[2], SMOOTH_TIME, dt);
     easing.damp(c, "fov", k.fov, SMOOTH_TIME, dt);
 
-    applyPose(camera, c);
+    // Pantallas angostas (retrato): aleja la cámara para que la maqueta no quede cortada
+    const { width, height } = state.size;
+    const mul = width < 1024 && width < height ? Math.min(1.6, height / width) : 1;
+    applyPose(camera, c, mul);
   });
 
   return null;
